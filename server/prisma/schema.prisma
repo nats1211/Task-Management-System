@@ -14,21 +14,22 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  avatarUrl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(uuid())
+  name            String
+  email           String   @unique
+  password        String
+  avatarUrl       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deleted_at      DateTime
 
-  ownedBoards   Board[]          @relation("BoardOwner")
-  boardMembers  BoardMember[]
-  createdTasks  Task[]           @relation("TaskCreator")
-  assignedTasks TaskAssignee[]
-  comments      Comment[]
-  attachments   Attachment[]
-  activities    ActivityLog[]
+  ownedBoards     Board[]          @relation("BoardOwner")
+  boardMembers    BoardMember[]
+  createdTasks    Task[]           @relation("TaskCreator")
+  assignedTasks   TaskAssignee[]
+  comments        Comment[]
+  attachments     Attachment[]
+  activities      ActivityLog[]
 }
 
 model Board{
@@ -39,6 +40,7 @@ model Board{
   ownerId         String
   created_at      DateTime        @default(now())
   updated_at      DateTime
+  deleted_at      DateTime
 
   owner           User            @relation("BoardOwner", fields: [ownerId], references: [id])
   members         BoardMember[]
